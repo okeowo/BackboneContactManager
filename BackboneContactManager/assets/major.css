@@ -1,0 +1,19 @@
+paper-input {
+	width: 20%;
+}
+
+.buttons {
+	width:80%;
+	display: inline-block;
+	margin: 0 auto;
+	text-align: center;
+}
+
+
+paper-button.success{
+  color: green;
+}
+
+paper-button.cancel{
+	color: red;
+}

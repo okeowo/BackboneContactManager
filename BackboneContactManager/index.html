@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Backbone Contact Manager </title>
+    <script type="text/javascript" src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/core-icon/core-icon.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/major.css">
+</head>
+
+<body>
+    <div class="container">
+        <paper-input id="firstNameTxt" label="First Name" floatinglabel></paper-input>
+        <paper-input id="lastNameTxt" label="Last Name" floatinglabel></paper-input>
+        <paper-input id="emailTxt" label="Email" floatinglabel></paper-input>
+        <paper-input id="phoneNumTxt" label="Phone Number" floatinglabel></paper-input>
+        <br>
+        <div class="buttons">
+            <paper-button class="success">
+                <core-icon icon="check"></core-icon>
+                Save
+            </paper-button>
+            <paper-button class="cancel">
+                <core-icon icon="clear"></core-icon>
+                Clear
+            </paper-button>
+        </div>
+    </div>
+</body>
+
+</html>
