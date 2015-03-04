@@ -10,16 +10,30 @@
     <link rel="import" href="bower_components/paper-button/paper-button.html">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/major.css">
+
+    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="bower_components/underscore/underscore-min.js" type="text/javascript"></script>
+    <script src="bower_components/backbone/backbone.js" type="text/javascript"></script>
+    <script src="bower_components/backbone.localstorage/backbone.localstorage-min.js" type="text/javascript"></script>
+
+    <script src="js/models/contact.js" type="text/javascript"></script>
+    <script src="js/collections/contacts.js" type="text/javascript"></script>
+
 </head>
 
 <body>
     <div class="container">
-        <paper-input id="firstNameTxt" label="First Name" floatinglabel></paper-input>
-        <paper-input id="lastNameTxt" label="Last Name" floatinglabel></paper-input>
-        <paper-input id="emailTxt" label="Email" floatinglabel></paper-input>
-        <paper-input id="phoneNumTxt" label="Phone Number" floatinglabel></paper-input>
-        <br>
-        <div class="buttons">
+        <div class="form">
+            <paper-input id="firstNameTxt" label="First Name" floatinglabel></paper-input>
+            <br>
+            <paper-input id="lastNameTxt" label="Last Name" floatinglabel></paper-input>
+            <br>
+            <paper-input id="addressTxt" label="Address" floatinglabel class='address'></paper-input>
+            <br>
+            <paper-input id="emailTxt" label="Email" floatinglabel></paper-input>
+            <br>
+            <paper-input id="phoneNumTxt" label="Phone Number" floatinglabel></paper-input>
+            <br>
             <paper-button class="success">
                 <core-icon icon="check"></core-icon>
                 Save
