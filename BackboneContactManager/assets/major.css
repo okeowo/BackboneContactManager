@@ -28,7 +28,7 @@
     padding-right: 8px;
 }
 
-.top-buffer { margin-top:50px; }
+.bottom-buffer { margin-bottom:50px; }
 
 label {
     display: inline;
