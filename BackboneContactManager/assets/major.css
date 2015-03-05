@@ -1,7 +1,42 @@
-paper-input {
-	width: 40%;
+.contact {
+    width: 250px;
+    height: 320px;
+    background-color: white;
+    border: solid;
+    border-width: 2px;
+    border-color: grey;
+}
+.contact-header {
+    background-color: #1E23B7;
+    height: 15%;
+    dislay: block;
+}
+.contact-image {
+    border: solid;
+    border-width: 2px;
+    border-color: white;
+    display: block;
+    margin: 0 auto;
+    margin-top: -20px;
+    box-shadow: -1px 10px 5px -5px rgba(0, 0, 0, 0.75);
+}
+.contact-info {
+    text-align: center;
+    margin-top: 3%;
+}
+.glyphicon {
+    padding-right: 8px;
 }
 
+.top-buffer { margin-top:50px; }
+
+label {
+    display: inline;
+}
+h4 {
+    color: grey;
+}
+/*
 .form{
 	width:100%;
 	display: inline-block;
@@ -9,11 +44,8 @@ paper-input {
 	text-align: center;
 }
 
-.form {
-	width:100%;
-	display:inline-block;
-	margin: 0 auto;
-	text-align: center
+paper-input {
+	width: 40%;
 }
 
 .address {
@@ -27,3 +59,4 @@ paper-button.success{
 paper-button.cancel{
 	color: red;
 }
+*/
