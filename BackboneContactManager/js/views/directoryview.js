@@ -1,3 +1,5 @@
+// contact repo for testing
+// should be removed later
 var contacts = [{
     name: 'Contact 1',
     address: '1, a street, a town, a city, AB12 3CD',
@@ -54,24 +56,26 @@ var DirectoryView = Backbone.View.extend({
 
     initialize: function ()  {
         this.collection = new Directory(contacts);
-        $('#filter').append(this.createSelect())
-        console.log(this.createSelect());
+
+        // create the select to filter by
+        $('#filter').append(this.createSelect());
+
         this.render();
     },
 
     render: function ()  {
-        _.each(this.collection.models, function (item){
+        _.each(this.collection.models, function (item) {
             this.renderContact(item);          
         }, this);
     },
 
-    renderContact: function(item) {
+    renderContact: function (item) {
         var contactView = new ContactView({ model: item });
         this.$el.append(contactView.$el);
     },
 
     getTypes: function ()  {
-        return _.uniq(this.collection.pluck('group'), false, function(group){
+        return _.uniq(this.collection.pluck('group'), false, function (group){
            return group.toLowerCase();
         });
     },
