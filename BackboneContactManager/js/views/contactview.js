@@ -18,6 +18,6 @@ var contact = new Contact({
     email: "anemail@me.com",
     group: "family"
 });
-var contactView = new ContactView({mode: contact})
+var contactView = new ContactView({model: contact})
 
 $("#directory").append(contactView.$el);
