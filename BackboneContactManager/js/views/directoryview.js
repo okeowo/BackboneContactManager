@@ -7,8 +7,8 @@ var DirectoryView = Backbone.View.extend({
     },
 
     render: function() {
-        _.each(this.collection.models, function(item) {
-            this.renderContact(item)
+        _.each(this.collection, function (item){
+            this.renderContact(item);
         }, this);
     },
 
@@ -16,7 +16,7 @@ var DirectoryView = Backbone.View.extend({
         var contactView = new ContactView({
             model: item
         });
-        this.$el.append(contactView.el);
+        this.$el.append(contactView.$el);
     }
 });
 
@@ -25,51 +25,51 @@ var DirectoryView = Backbone.View.extend({
 var contacts = [{
     name: "Contact 1",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "family"
+    group: "family"
 }, {
     name: "Contact 2",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "family"
+    group: "family"
 }, {
     name: "Contact 3",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "friend"
+    group: "friend"
 }, {
     name: "Contact 4",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "colleague"
+    group: "colleague"
 }, {
     name: "Contact 5",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "family"
+    group: "family"
 }, {
     name: "Contact 6",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "colleague"
+    group: "colleague"
 }, {
     name: "Contact 7",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "friend"
+    group: "friend"
 }, {
     name: "Contact 8",
     address: "1, a street, a town, a city, AB12 3CD",
-    tel: "0123456789",
+    phone: "0123456789",
     email: "anemail@me.com",
-    type: "family"
+    group: "family"
 }];
 
-var DirectoryView = new DirectoryView(contacts);
+var directoryView = new DirectoryView(contacts);

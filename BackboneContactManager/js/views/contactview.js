@@ -1,16 +1,23 @@
 var ContactView = Backbone.View.extend({
-	template: $("#contactTemplate").html(),
+	template: _.template($("#contactTemplate").html()),
 
-/*
-	initialize: function (){
-		//this.model = options.model;
+	initialize: function (options){
+		this.model = options;
 		this.render();
-		console.log(this.template);
 	},
-	*/
 	render: function (){
-		var tmpl = _.template(this.template);
-		this.$el.html(tmpl(this.model.toJSON()));
+		this.$el.html(this.template(this.model.toJSON()));
 		return this;
 	}
 });
+
+var contact = new Contact({
+    name: "Contact 1",
+    address: "1, a street, a town, a city, AB12 3CD",
+    phone: "0123456789",
+    email: "anemail@me.com",
+    group: "family"
+});
+var contactView = new ContactView({mode: contact})
+
+$("directory").append(contactView.$el);
