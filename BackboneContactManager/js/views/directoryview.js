@@ -1,29 +1,5 @@
-var DirectoryView = Backbone.View.extend({
-    el: $("#directory"),
-
-    initialize: function(options) {
-        this.collection = options;
-        this.render();
-    },
-
-    render: function() {
-        _.each(this.collection, function (item){
-            this.renderContact(item);
-        }, this);
-    },
-
-    renderContact: function(item) {
-        var contactView = new ContactView({
-            model: item
-        });
-        this.$el.append(contactView.$el);
-    }
-});
-
-// use this to populate collection
-
 var contacts = [{
-    name: "Contact 1",
+    name: 'Contact 1',
     address: "1, a street, a town, a city, AB12 3CD",
     phone: "0123456789",
     email: "anemail@me.com",
@@ -71,5 +47,32 @@ var contacts = [{
     email: "anemail@me.com",
     group: "family"
 }];
+
+
+var DirectoryView = Backbone.View.extend({
+    el: $("#directory"),
+
+    initialize: function() {
+        this.collection = new Directory(contacts);
+        this.render();
+    },
+
+    render: function() {
+        _.each(this.collection.models, function (item){
+            this.renderContact(item);
+            
+        }, this);
+    },
+
+    renderContact: function(item) {
+        var contactView = new ContactView({
+            model: item
+        });
+        this.$el.append(contactView.$el);
+    }
+});
+
+// use this to populate collection
+
 
 var directoryView = new DirectoryView(contacts);
