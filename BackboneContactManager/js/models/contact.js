@@ -2,10 +2,10 @@ var Contact = Backbone.Model.extend({
 	defaults: {
 		photo: 'assets/img/placeholder.png'
 	},
-	initialize: function (firstName, lastName, address, phone, email){
+	initialize: function (name, group, address, phone, email){
 		this.set ({
-			firstName: firstName,
-			lastName: lastName,
+			name: name, 
+			group: group,
 			address: address, 
 			phone: phone,
 			email: email

@@ -19,8 +19,9 @@
     <script src="bower_components/backbone.localstorage/backbone.localstorage-min.js" type="text/javascript"></script>
 
     <script src="js/models/contact.js" type="text/javascript"></script>
-    <script src="js/collections/contacts.js" type="text/javascript"></script>
-
+    <script src="js/collections/directory.js" type="text/javascript"></script>
+	<script src="js/views/contactview.js" type="text/javascript"></script>
+	<script src="js/views/directoryview.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -61,253 +62,36 @@
             <label class="navbar-brand">Backbone Contact Manager</label>
         </nav>
 
-        <div id="Directory" class="row">
+        <div id="directory" class="row"></div>
+
+        <!-- UNDERSCORE TEMPLATES -->
+        <script type="text/template" id="contactTemplate">
             <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
+                <div class="contact bottom-buffer">
                     <div class="contact-header">
                     </div>
                     <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
+                        <img src="<%= photo %>" class="contact-image img-circle">
                     </div>
                     <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
+                        <h3>"<%= name %>"</h3>
+                        <h4>"<%= group %>"</h4>
                         <br>
                         <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
+                        <label>"
+                            <%=a ddress %>"</label>
                         <br>
                         <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
+                        <label>"
+                            <%=e mail %>"</label>
                         <br>
                         <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
+                        <label>"
+                            <%=p hone %>"</label>
                     </div>
                 </div>
             </div>
-
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-lg-3">
-                <div  class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
-                        <img src="assets/img/placeholder.png" class="contact-image img-circle">
-                    </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3>Ivan Manolov</h3>
-                        <h4>Family</h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label>124 Lawn Terrace, New York</label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label>ivan@ivan.com</label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label>917-319-0192</label>
-                    </div>
-                </div>
-            </div>
- 
-        </div>
-
+        </script>
 </body>
 
 </html>
