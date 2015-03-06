@@ -1,11 +1,16 @@
 var ContactView = Backbone.View.extend({
-	template: _.template($("#contactTemplate").html()),
+	template: $("#contactTemplate").html(),
 
-	initialize: function (options){
-		this.model = options.model;
+/*
+	initialize: function (){
+		//this.model = options.model;
+		this.render();
+		console.log(this.template);
 	},
+	*/
 	render: function (){
-		this.$el.html(this.template({model: this.model}));
+		var tmpl = _.template(this.template);
+		this.$el.html(tmpl(this.model.toJSON()));
 		return this;
 	}
 });

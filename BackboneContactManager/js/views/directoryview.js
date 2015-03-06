@@ -16,7 +16,7 @@ var DirectoryView = Backbone.View.extend({
         var contactView = new ContactView({
             model: item
         });
-        this.el.append(contactView.render().el);
+        this.$el.append(contactView.el);
     }
 });
 
