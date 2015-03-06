@@ -20,4 +20,4 @@ var contact = new Contact({
 });
 var contactView = new ContactView({mode: contact})
 
-$("directory").append(contactView.$el);
+$("#directory").append(contactView.$el);
