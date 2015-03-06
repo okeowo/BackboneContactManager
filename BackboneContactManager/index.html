@@ -11,7 +11,7 @@
     <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="bower_components/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="bower_components/backbone/backbone.js" type="text/javascript"></script>
-    <script src="bower_components/backbone.localstorage/backbone.localstorage-min.js" type="text/javascript"></script>
+    <script src="bower_components/backbone.localstorage/backbone.localStorage-min.js" type="text/javascript"></script>
 
 </head>
 
@@ -20,6 +20,12 @@
         <nav class="navbar navbar-inverse">
             <label class="navbar-brand">Backbone Contact Manager</label>
         </nav>
+
+        <div class="row">
+            <div id="filter" class="form-group col-lg-2">
+                <label  for="filterSelect">Filter Groups:</label>
+            </div>
+        </div>
 
         <div id="directory" class="row"></div>
 
@@ -35,7 +41,7 @@
                     <div style="text-align:center; margin-top:3%;">
                         <h3><%= name %></h3>
                         <h4><%= group %></h4>
-
+                        <br>
                         <span class="glyphicon glyphicon-home"></span>
                         <label><%= address %></label>
                         <br>

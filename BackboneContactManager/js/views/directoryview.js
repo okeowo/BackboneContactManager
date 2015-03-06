@@ -1,78 +1,98 @@
 var contacts = [{
     name: 'Contact 1',
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "family"
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
 }, {
-    name: "Contact 2",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "family"
+    name: 'Contact 2',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
 }, {
-    name: "Contact 3",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "friend"
+    name: 'Contact 3',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'friend'
 }, {
-    name: "Contact 4",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "colleague"
+    name: 'Contact 4',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'colleague'
 }, {
-    name: "Contact 5",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "family"
+    name: 'Contact 5',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
 }, {
-    name: "Contact 6",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "colleague"
+    name: 'Contact 6',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'colleague'
 }, {
-    name: "Contact 7",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "friend"
+    name: 'Contact 7',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'friend'
 }, {
-    name: "Contact 8",
-    address: "1, a street, a town, a city, AB12 3CD",
-    phone: "0123456789",
-    email: "anemail@me.com",
-    group: "family"
+    name: 'Contact 8',
+    address: '1, a street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
 }];
 
 
 var DirectoryView = Backbone.View.extend({
-    el: $("#directory"),
+    el: $('#directory'),
 
-    initialize: function() {
+    initialize: function ()  {
         this.collection = new Directory(contacts);
+        $('#filter').append(this.createSelect())
+        console.log(this.createSelect());
         this.render();
     },
 
-    render: function() {
+    render: function ()  {
         _.each(this.collection.models, function (item){
-            this.renderContact(item);
-            
+            this.renderContact(item);          
         }, this);
     },
 
     renderContact: function(item) {
-        var contactView = new ContactView({
-            model: item
-        });
+        var contactView = new ContactView({ model: item });
         this.$el.append(contactView.$el);
+    },
+
+    getTypes: function ()  {
+        return _.uniq(this.collection.pluck('group'), false, function(group){
+           return group.toLowerCase();
+        });
+    },
+
+    createSelect: function ()  {
+        var select = $('<select/>', {
+            class: 'form-control',
+            id: "filterSelect",
+            html: '<option>All</option>'
+        });
+
+        _.each(this.getTypes(), function (item){
+            var option = $('<option/>',{
+                value: item.toLowerCase(),
+                html: item.toLowerCase(),
+            }).appendTo(select);
+        });
+
+        return select;
     }
 });
 
-// use this to populate collection
+var directoryView = new DirectoryView();
 
-
-var directoryView = new DirectoryView(contacts);
