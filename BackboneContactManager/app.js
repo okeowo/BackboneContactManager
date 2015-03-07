@@ -11,7 +11,7 @@ var Contact = Backbone.Model.extend({
 
 var Directory = Backbone.Collection.extend({
 	model: Contact,
-	localStorage: new Backbone.LocalStorage("contact-directory")
+	localStorage: new Backbone.LocalStorage('contact-directory')
 });
 
 
@@ -19,7 +19,7 @@ var Directory = Backbone.Collection.extend({
 
 var ContactView = Backbone.View.extend({
 	//get the undercore template
-	template: _.template($("#contactTemplate").html()),
+	template: _.template($('#contactTemplate').html()),
 
 	//always render on initialize so you don't have to later
 	initialize: function (){
@@ -27,6 +27,17 @@ var ContactView = Backbone.View.extend({
 	},
 	render: function (){
 		this.$el.html(this.template(this.model.toJSON()));
+
+		//set popover
+		var contactInfoTemplate = _.template($('#contactInfoTemplate').html());
+		var popoverTemplate = contactInfoTemplate(this.model.toJSON());
+		this.$el.find('a').popover({
+			container:'body',
+			html: true,
+			content: function () {
+				return $.parseHTML(popoverTemplate);
+			}
+		});
 		return this;
 	}
 });
@@ -105,7 +116,7 @@ var DirectoryView = Backbone.View.extend({
         var contactView = new ContactView({ model: item });
         this.$el.append(contactView.$el);
     }
+
 });
 
 var directoryView = new DirectoryView();
-

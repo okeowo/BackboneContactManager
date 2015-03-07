@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <title>Backbone Contact Manager </title>
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/major.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/primary.css" />
 
     <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="bower_components/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="bower_components/backbone/backbone.js" type="text/javascript"></script>
     <script src="bower_components/backbone.localstorage/backbone.localStorage-min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -22,35 +23,43 @@
         </nav>
 
         <div class="row">
-            <div id="filter" class="form-group col-lg-2">
-                <label  for="filterSelect">Filter Groups:</label>
+            <div id="filter" class="form-group col-lg-2 col-sm-3 col-xs-6">
+                <label for="filterSelect">Filter Groups:</label>
             </div>
         </div>
 
         <div id="directory" class="row"></div>
 
+
         <!-- UNDERSCORE TEMPLATES -->
         <script type="text/template" id="contactTemplate">
-            <div class="col-lg-3">
-                <div class="contact bottom-buffer">
-                    <div class="contact-header">
-                    </div>
-                    <div>
+            <div class="col-lg-4 col-sm-6 col-xs-6">
+                <a  tabindex="0" role="button" data-toggle="popover" data-trigger="focus"  class="btn contact bottom-buffer">
+                    <div class="contact-group"></div>
+                    <div class="img-div">
                         <img src=<%= photo %> class="contact-image img-circle">
                     </div>
-                    <div style="text-align:center; margin-top:3%;">
-                        <h3><%= name %></h3>
-                        <h4><%= group %></h4>
-                        <br>
-                        <span class="glyphicon glyphicon-home"></span>
-                        <label><%= address %></label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label><%= email %></label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label><%= phone %></label>
+                    <div class="contact-name">
+                        <h4> <%= name %></h4>
                     </div>
+                </a>
+            </div>
+        </script>
+
+        <script type="text/template" id="contactInfoTemplate">
+            <div class="row">
+                <div class="contact-info">
+                    <span class='glyphicon glyphicon-info-sign'></span>
+                    <label><%= group %></label>
+                    <br>
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    <label><%= address %></label>
+                    <br>
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    <label><%= email %></label>
+                    <br>
+                    <span class="glyphicon glyphicon-earphone"></span>
+                    <label><%= phone %></label>
                 </div>
             </div>
         </script>
@@ -59,6 +68,7 @@
         <script src="js/collections/directory.js" type="text/javascript"></script>
         <script src="js/views/contactview.js" type="text/javascript"></script>
         <script src="js/views/directoryview.js" type="text/javascript"></script>
+    </div>
+  </div>  
 </body>
-
-</html>
+<html>
