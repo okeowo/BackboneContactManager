@@ -12,11 +12,12 @@
     <script src="bower_components/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="bower_components/backbone/backbone.js" type="text/javascript"></script>
     <script src="bower_components/backbone.localstorage/backbone.localStorage-min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/js/popover.js"></script>
 
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <nav class="navbar navbar-inverse">
             <label class="navbar-brand">Backbone Contact Manager</label>
         </nav>
@@ -29,32 +30,40 @@
 
         <div id="directory" class="row"></div>
 
-        <div class="col-lg-3">
-            <div class="bottom-buffer" style="width: 300px; height: 90px; background-color: white; border: solid; border-width: 1px; border-color: grey; background: rgba(226, 226, 226, 1);
-    background: -moz-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226, 226, 226, 1)), color-stop(50%, rgba(219, 219, 219, 1)), color-stop(51%, rgba(209, 209, 209, 1)), color-stop(100%, rgba(254, 254, 254, 1)));
-    background: -webkit-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
-    background: -o-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
-    background: -ms-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
-    background: linear-gradient(to bottom, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0);
-    border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    -webkit-box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
-    box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);">
-                <div style="background-color: #1E23B7; width:30px; height:100%; display:block; float:left; border-radius:10px 0px 0px 10px"></div>
-                <div style="float:left;">
-                    <img src="assets/img/placeholder.png" style="display:block; height:88px; border:solid; border-width:2px; border-color:white" class="img-circle">
-                </div>
-                <div style="width:100%;text-align:center;">
-                    <h4>Ivan Manolov</h4>
-                    <h5>Family</h5>
-                    <br>
-                </div>
+
+        <script type="text/template" id="contactTemplate">
+            <div class="col-lg-3">
+                <a class="btn bottom-buffer" style="width: 300px; height: 90px; background-color: white; border: solid; border-width: 1px; border-color: grey; background; margin-bottom: 50px; padding:0px;
+                    rgba(226, 226, 226, 1);
+                    background: -moz-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+                    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226, 226, 226, 1)), color-stop(50%, rgba(219, 219, 219, 1)), color-stop(51%, rgba(209, 209, 209, 1)), color-stop(100%, rgba(254, 254, 254, 1)));
+                    background: -webkit-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+                    background: -o-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+                    background: -ms-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+                    background: linear-gradient(to bottom, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+                    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0);
+                    border-radius: 10px 10px 10px 10px;
+                    -moz-border-radius: 10px 10px 10px 10px;
+                    -webkit-border-radius: 10px 10px 10px 10px;
+                    -webkit-box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
+                    box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);">
+                    <div style="background-color: #1E23B7; width:30px; height:100%; display:block; float:left; border-radius:10px 0px 0px 10px"></div>
+                    <div style="float:left;">
+                        <img src=<%= photo %> style="display:block; height:88px; border:solid; border-width:2px; border-color:white" class="img-circle">
+                    </div>
+                    <div style="width:100%;text-align:center;margin-top:30px;">
+                        <h4> <%= name %></h4>
+                    </div>
+                </a>
             </div>
-        </div>
+        </script>
+
+        <script type="text/template" id="contactInfoTemplate">
+
+        </script>
+
+        <script type="text/javascript" src="app.js"></script>
     </div>
 </body>
 <html>
