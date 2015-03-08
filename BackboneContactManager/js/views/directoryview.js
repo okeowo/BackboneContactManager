@@ -56,7 +56,7 @@ var DirectoryView = Backbone.View.extend({
 
         events: {
             'change #filter select': 'setFilter',
-            "click #saveContactBtn": 'addContact'
+            'click #saveContactBtn': 'addContact'
         },
 
             initialize: function() {
@@ -67,10 +67,12 @@ var DirectoryView = Backbone.View.extend({
                 this.$el.find('#filter').append(this.createSelect());
                 this.on('change:filterGroup', this.filterByGroup, this);
                 this.listenTo(this.collection, 'reset', this.render);
+
+                this.form = this.$el.find('#contactForm');
             },
  
             render: function() {
-                this.$el.find("article").remove();
+                this.$el.find('article').remove();
                 _.each(this.collection.models, function(item) {
                     this.renderContact(item);
                 }, this);
@@ -92,7 +94,7 @@ var DirectoryView = Backbone.View.extend({
             createSelect: function() {
                 var select = $('<select/>', {
                     class: 'form-control',
-                    id: "filterSelect",
+                    id: 'filterSelect',
                     html: '<option>All</option>'
                 });
 
@@ -109,29 +111,31 @@ var DirectoryView = Backbone.View.extend({
             //Set filter property and fire change event
             setFilter: function(e) {
                 this.filterGroup= e.currentTarget.value.toLowerCase();
-                this.trigger("change:filterGroup");
+                this.trigger('change:filterGroup');
             },
 
             //filter the view
             filterByGroup: function() {
-                if (this.filterGroup === "all") {
+                if (this.filterGroup === 'all') {
                     this.collection.reset(contacts);
-                    contactsRouter.navigate("filter/all", { trigger: true });
+                    contactsRouter.navigate('filter/all', { trigger: true });
                 } else {
                     this.collection.reset(contacts, { silent: true });
 
                     var filterGroup = this.filterGroup;
                     var filtered = _.filter(this.collection.models, function(item) {
-                            return item.get("group") === filterGroup;
+                            return item.get('group') === filterGroup;
                         });
                     this.collection.reset(filtered);
 
-                    contactsRouter.navigate("filter/" + filterGroup, { trigger: true});
+                    contactsRouter.navigate('filter/' + filterGroup, { trigger: true});
                 }
             },
 
             addContact: function () {
-                console.log(this.$el.find('form')[0].serialize()); //.serializeArray());
+                var contact= new Contact(_.object(_.map(this.form.serializeArray(), _.values))); 
+                contact.set('photo', this.form.find('#photo').val());
+                console.log(contact);
             }
         });
 
