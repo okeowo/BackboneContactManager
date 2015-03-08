@@ -59,13 +59,13 @@ var DirectoryView = Backbone.View.extend({
         },
 
             initialize: function() {
+                this.filterGroup = '';
                 this.collection = new Directory(contacts);
                 this.render();
                 // create the select to filter by
                 this.$el.find('#filter').append(this.createSelect());
-                
-                this.on("change:filterType", this.filterByType, this);
-                this.collection.on("reset", this.render, this);
+                this.on('change:filterGroup', this.filterByGroup, this);
+                this.listenTo(this.collection, 'reset', this.render);
             },
  
             render: function() {
@@ -107,26 +107,25 @@ var DirectoryView = Backbone.View.extend({
 
             //Set filter property and fire change event
             setFilter: function(e) {
-                this.filterType = e.currentTarget.value;
-                this.trigger("change:filterType");
+                this.filterGroup= e.currentTarget.value.toLowerCase();
+                this.trigger("change:filterGroup");
             },
 
             //filter the view
-            filterByType: function() {
-                if (this.filterType.toLowerCase() === "all") {
-                                        console.log(contacts);
+            filterByGroup: function() {
+                if (this.filterGroup === "all") {
                     this.collection.reset(contacts);
-                    //contactsRouter.navigate("filter/all");
+                    contactsRouter.navigate("filter/all", { trigger: true });
                 } else {
                     this.collection.reset(contacts, { silent: true });
 
-                    var filterType = this.filterType;
+                    var filterGroup = this.filterGroup;
                     var filtered = _.filter(this.collection.models, function(item) {
-                            return item.get("group") === filterType;
+                            return item.get("group") === filterGroup;
                         });
                     this.collection.reset(filtered);
 
-                    //contactsRouter.navigate("filter/" + filterType);
+                    contactsRouter.navigate("filter/" + filterGroup, { trigger: true});
                 }
             }
         });

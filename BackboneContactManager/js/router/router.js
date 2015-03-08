@@ -2,17 +2,14 @@
 
     var ContactsRouter = Backbone.Router.extend({
         routes: {
-            "filter/:type": "urlFilter"
+            "filter/:group": "urlFilter"
         },
 
-        urlFilter: function (type) {
-            directory.filterType = type;
-            directory.trigger("change:filterType");
+        urlFilter: function (group) {
+            directoryView.filterGroup= group;
+            directoryView.trigger("change:filterGroup");
         }
     });
-
-    //create instance of master view
-    var directory = new DirectoryView();
 
     //create router instance
     var contactsRouter = new ContactsRouter();

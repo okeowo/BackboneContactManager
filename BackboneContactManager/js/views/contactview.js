@@ -7,7 +7,6 @@ var ContactView = Backbone.View.extend({
     },
 
     tagName: 'article', 
-    
     //always render on initialize so you don't have to later
     initialize: function() {
         this.render();
