@@ -1,4 +1,4 @@
-// models/contact.js
+s// models/contact.js
 
 var Contact = Backbone.Model.extend({
 	defaults: {

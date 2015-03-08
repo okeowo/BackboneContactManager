@@ -52,51 +52,83 @@ var contacts = [{
 
 
 var DirectoryView = Backbone.View.extend({
-    el: $('#directory'),
+            el: $('#directory'),
 
-    initialize: function ()  {
-        this.collection = new Directory(contacts);
+        events: {
+            "change #filter select": "setFilter"
+        },
 
-        // create the select to filter by
-        $('#filter').append(this.createSelect());
+            initialize: function() {
+                this.collection = new Directory(contacts);
+                this.render();
+                // create the select to filter by
+                this.$el.find('#filter').append(this.createSelect());
+                
+                this.on("change:filterType", this.filterByType, this);
+                this.collection.on("reset", this.render, this);
+            },
+ 
+            render: function() {
+                this.$el.find("article").remove();
+                _.each(this.collection.models, function(item) {
+                    this.renderContact(item);
+                }, this);
+            },
 
-        this.render();
-    },
+            renderContact: function(item) {
+                var contactView = new ContactView({
+                    model: item
+                });
+                this.$el.append(contactView.$el);
+            },
 
-    render: function ()  {
-        _.each(this.collection.models, function (item) {
-            this.renderContact(item);          
-        }, this);
-    },
+            getTypes: function() {
+                return _.uniq(this.collection.pluck('group'), false, function(group) {
+                    return group.toLowerCase();
+                });
+            },
 
-    renderContact: function (item) {
-        var contactView = new ContactView({ model: item });
-        this.$el.append(contactView.$el);
-    },
+            createSelect: function() {
+                var select = $('<select/>', {
+                    class: 'form-control',
+                    id: "filterSelect",
+                    html: '<option>All</option>'
+                });
 
-    getTypes: function ()  {
-        return _.uniq(this.collection.pluck('group'), false, function (group){
-           return group.toLowerCase();
+                _.each(this.getTypes(), function(item) {
+                    var option = $('<option/>', {
+                        value: item.toLowerCase(),
+                        html: item.toLowerCase(),
+                    }).appendTo(select);
+                });
+
+                return select;
+            },
+
+            //Set filter property and fire change event
+            setFilter: function(e) {
+                this.filterType = e.currentTarget.value;
+                this.trigger("change:filterType");
+            },
+
+            //filter the view
+            filterByType: function() {
+                if (this.filterType.toLowerCase() === "all") {
+                                        console.log(contacts);
+                    this.collection.reset(contacts);
+                    //contactsRouter.navigate("filter/all");
+                } else {
+                    this.collection.reset(contacts, { silent: true });
+
+                    var filterType = this.filterType;
+                    var filtered = _.filter(this.collection.models, function(item) {
+                            return item.get("group") === filterType;
+                        });
+                    this.collection.reset(filtered);
+
+                    //contactsRouter.navigate("filter/" + filterType);
+                }
+            }
         });
-    },
 
-    createSelect: function ()  {
-        var select = $('<select/>', {
-            class: 'form-control',
-            id: "filterSelect",
-            html: '<option>All</option>'
-        });
-
-        _.each(this.getTypes(), function (item){
-            var option = $('<option/>',{
-                value: item.toLowerCase(),
-                html: item.toLowerCase(),
-            }).appendTo(select);
-        });
-
-        return select;
-    }
-});
-
-var directoryView = new DirectoryView();
-
+        var directoryView = new DirectoryView();

@@ -5,7 +5,6 @@
     border: solid;
     border-width: 1px;
     border-color: grey;
-    background;
     padding: 0px;
     rgba(226, 226, 226, 1);
     background: -moz-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
@@ -28,7 +27,7 @@
     height: 100%;
     display: block;
     float: left;
-    border-radius: 10px 0px 0px 10px
+    border-radius: 10px 0px 0px 10px 
 }
 .contact-image {
     display: block;
@@ -63,6 +62,7 @@
 .glyphicon {
     padding-right: 0px;
 }
-.bottom-buffer {
+.buffer {
     margin-bottom: 120px;
 }
+

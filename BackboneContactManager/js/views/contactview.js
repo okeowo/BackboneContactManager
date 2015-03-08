@@ -6,6 +6,8 @@ var ContactView = Backbone.View.extend({
         'click a': 'renderContactInfo',
     },
 
+    tagName: 'article', 
+    
     //always render on initialize so you don't have to later
     initialize: function() {
         this.render();
@@ -29,15 +31,16 @@ var ContactView = Backbone.View.extend({
     },
 
     renderContactInfo: function() {
-        if (this.$el.find('a').hasClass('addHeight')) {
-            this.$el.find('a').removeClass('addHeight');
+    	var currentContact= this.$el.find('a');
+        if (currentContact.hasClass('addHeight')) {
+            currentContact.removeClass('addHeight');
             this.$el.find("div:nth-child(4)").toggle();
-            this.$el.find('a').animate({ height: '90px', 'margin-bottom':'50px' });
+            currentContact.animate({ height: '90px', 'margin-bottom':'120px' });
 
         } 
         else {
-            this.$el.find('a').animate({ height: '200px', 'margin-bottom': '0px'});
-            this.$el.find('a').addClass('addHeight');
+            currentContact.animate({ height: '200px', 'margin-bottom': '0px'});
+            currentContact.addClass('addHeight');
             this.$el.find("div:nth-child(4)").toggle();
 
         }
