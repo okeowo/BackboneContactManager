@@ -22,7 +22,7 @@
     box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
 }
 .contact-header {
-    background-color: #1E23B7;
+    /* background-color: #1E23B7; */
     width: 30px;
     height: 100%;
     display: block;
@@ -42,6 +42,7 @@
     margin-top: 30px;
     color: black;
 }
+
 /*
 .contact-info {
     text-align: center;
@@ -60,7 +61,7 @@
     float: left;
 }
 .glyphicon {
-    padding-right: 0px;
+    padding-right: 5px;
 }
 
 .buffer {

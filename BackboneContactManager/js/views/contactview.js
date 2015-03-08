@@ -13,6 +13,7 @@ var ContactView = Backbone.View.extend({
         this.render();
     },
     render: function() {
+    	this.model.set('groupColor', this.renderContactHeader(this.model.get('group')));
         this.$el.html(this.template(this.model.toJSON()));
 
         /*
@@ -30,6 +31,20 @@ var ContactView = Backbone.View.extend({
         return this;
     },
 
+    renderContactHeader: function (group) {
+    	switch (group){
+    		case 'family':
+    			return '#1E23B7';
+    			break;
+			case 'colleague':
+    			return '#be0010';
+    			break;
+			case 'friend':
+				return '#1c9d12';
+				break
+    	}
+    },
+
     renderContactInfo: function() {
     	this.$el.removeClass('buffer');
     	var currentContact= this.$el.find('a');
@@ -43,7 +58,7 @@ var ContactView = Backbone.View.extend({
         } 
         else {
             //currentContact.animate({ height: '200px', 'margin-bottom': '10px'});
-           currentContact.addClass('addHeight');
+            currentContact.addClass('addHeight');
             currentContact.css('height', '200px');
             this.$el.css('margin-bottom', '10px');
             this.$el.find("div:nth-child(4)").toggle();
