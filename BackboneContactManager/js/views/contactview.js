@@ -7,6 +7,7 @@ var ContactView = Backbone.View.extend({
     },
 
     tagName: 'article', 
+    className: 'col-lg-3 col-sm-6 col-xs-6 buffer',
     //always render on initialize so you don't have to later
     initialize: function() {
         this.render();
@@ -30,16 +31,21 @@ var ContactView = Backbone.View.extend({
     },
 
     renderContactInfo: function() {
+    	this.$el.removeClass('buffer');
     	var currentContact= this.$el.find('a');
         if (currentContact.hasClass('addHeight')) {
             currentContact.removeClass('addHeight');
             this.$el.find("div:nth-child(4)").toggle();
-            currentContact.animate({ height: '90px', 'margin-bottom':'120px' });
+            currentContact.css('height', '90px');
+            this.$el.css('margin-bottom', '120px');
+            //currentContact.animate({ height: '90px', 'margin-bottom':'120px' });
 
         } 
         else {
-            currentContact.animate({ height: '200px', 'margin-bottom': '0px'});
-            currentContact.addClass('addHeight');
+            //currentContact.animate({ height: '200px', 'margin-bottom': '10px'});
+           currentContact.addClass('addHeight');
+            currentContact.css('height', '200px');
+            this.$el.css('margin-bottom', '10px');
             this.$el.find("div:nth-child(4)").toggle();
 
         }
