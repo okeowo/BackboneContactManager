@@ -55,7 +55,8 @@ var DirectoryView = Backbone.View.extend({
             el: $('#directory'),
 
         events: {
-            "change #filter select": "setFilter"
+            'change #filter select': 'setFilter',
+            "click #saveContactBtn": 'addContact'
         },
 
             initialize: function() {
@@ -127,6 +128,10 @@ var DirectoryView = Backbone.View.extend({
 
                     contactsRouter.navigate("filter/" + filterGroup, { trigger: true});
                 }
+            },
+
+            addContact: function () {
+                console.log(this.$el.find('form')[0].serialize()); //.serializeArray());
             }
         });
 
