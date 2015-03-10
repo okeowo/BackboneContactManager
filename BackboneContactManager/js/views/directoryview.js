@@ -136,8 +136,12 @@ var DirectoryView = Backbone.View.extend({
 
             addContact: function () {
                 var contact= new Contact(_.object(_.map(this.form.serializeArray(), _.values))); 
-                if(this.form.find('#photo').val() !== ''){
-                    contact.set('photo', this.form.find('#photo').val());
+                var photoPath = this.form.find('#photo').val();
+                if(photoPath !== ''){
+                    var filename = photoPath.replace(/^.*\\/, "");
+                    var prepend = 'assets/img/';
+                    var fixedPath = prepend + filename;
+                    contact.set('photo', fixedPath);
                 }
                 
                 contacts.push(contact);
