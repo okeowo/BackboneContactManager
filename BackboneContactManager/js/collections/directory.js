@@ -1,4 +1,6 @@
+var storeVar = localStorage.getItem('contact-directory');
+
 var Directory = Backbone.Collection.extend({
 	model: Contact,
-	localStorage: new Backbone.LocalStorage("contact-directory")
+	localStorage: new Store("contact-directory")
 });

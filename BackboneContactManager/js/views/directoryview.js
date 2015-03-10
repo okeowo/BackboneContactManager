@@ -1,54 +1,66 @@
-// contact repo for testing
-// should be removed later
-var contacts = [{
-    name: 'Contact 1',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'family'
-}, {
-    name: 'Contact 2',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'family'
-}, {
-    name: 'Contact 3',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'friend'
-}, {
-    name: 'Contact 4',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'colleague'
-}, {
-    name: 'Contact 5',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'family'
-}, {
-    name: 'Contact 6',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'colleague'
-}, {
-    name: 'Contact 7',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'friend'
-}, {
-    name: 'Contact 8',
-    address: '1 street, a town, a city, AB12 3CD',
-    phone: '0123456789',
-    email: 'anemail@me.com',
-    group: 'family'
-}];
+var directory = new Directory();
+(function (){
+    var contacts = [{
+        name: 'Contact 1',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'family'
+    }, {
+        name: 'Contact 2',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'family'
+    }, {
+        name: 'Contact 3',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'friend'
+    }, {
+        name: 'Contact 4',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'colleague'
+    }, {
+        name: 'Contact 5',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'family'
+    }, {
+        name: 'Contact 6',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'colleague'
+    }, {
+        name: 'Contact 7',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'friend'
+    }, {
+        name: 'Contact 8',
+        address: '1 street, a town, a city, AB12 3CD',
+        phone: '0123456789',
+        email: 'anemail@me.com',
+        group: 'family'
+    }]
+
+    directory.fetch ({ async: false, success: function (data) {
+            if (data.models.length === 0){
+                _.each(contacts, function (model) {
+                    var contact = new Contact(model);
+                    directory.add(contact);
+                    contact.save();    
+                });
+            }
+        }
+    });
+})();
 
 
 var DirectoryView = Backbone.View.extend({
@@ -60,8 +72,7 @@ var DirectoryView = Backbone.View.extend({
         },
 
             initialize: function() {
-                this.filterGroup = '';
-                this.collection = new Directory(contacts);
+                this.collection = directory;
                 this.render();
                 // create the select to filter by
                 this.$el.find('#filter').append(this.createSelect());
@@ -118,16 +129,19 @@ var DirectoryView = Backbone.View.extend({
 
             //filter the view
             filterByGroup: function() {
+                this.collection.fetch();
                 if (this.filterGroup === 'all') {
-                    this.collection.reset(contacts);
+                    this.collection.reset(this.collection.models);
                     contactsRouter.navigate('filter/all', { trigger: true });
-                } else {
-                    this.collection.reset(contacts, { silent: true });
+                } 
+                else {
+                    this.collection.reset(this.collection.models, { silent: true });
 
                     var filterGroup = this.filterGroup;
                     var filtered = _.filter(this.collection.models, function(item) {
                             return item.get('group') === filterGroup;
-                        });
+                    });
+
                     this.collection.reset(filtered);
 
                     contactsRouter.navigate('filter/' + filterGroup, { trigger: true});
@@ -144,9 +158,11 @@ var DirectoryView = Backbone.View.extend({
                     contact.set('photo', fixedPath);
                 }
                 
-                contacts.push(contact);
+                //contacts.push(contact);
 
                 this.collection.add(contact);
+                contact.save();
+
 
                 if (_.indexOf(this.getGroups, contact.group) === -1){
                     this.$el.find('#filter').find('select').remove().end().append(this.createSelect());
