@@ -65,10 +65,12 @@ var DirectoryView = Backbone.View.extend({
                 this.render();
                 // create the select to filter by
                 this.$el.find('#filter').append(this.createSelect());
-                this.on('change:filterGroup', this.filterByGroup, this);
+                this.listenTo(this,'change:filterGroup', this.filterByGroup);
                 this.listenTo(this.collection, 'reset', this.render);
 
                 this.form = this.$el.find('#contactForm');
+
+                this.listenTo(this.collection, 'add', this.renderContact)
             },
  
             render: function() {
@@ -85,7 +87,7 @@ var DirectoryView = Backbone.View.extend({
                 this.$el.append(contactView.$el);
             },
 
-            getTypes: function() {
+            getGroups: function() {
                 return _.uniq(this.collection.pluck('group'), false, function(group) {
                     return group.toLowerCase();
                 });
@@ -98,7 +100,7 @@ var DirectoryView = Backbone.View.extend({
                     html: '<option>All</option>'
                 });
 
-                _.each(this.getTypes(), function(item) {
+                _.each(this.getGroups(), function(item) {
                     var option = $('<option/>', {
                         value: item.toLowerCase(),
                         html: item.toLowerCase(),
@@ -134,8 +136,17 @@ var DirectoryView = Backbone.View.extend({
 
             addContact: function () {
                 var contact= new Contact(_.object(_.map(this.form.serializeArray(), _.values))); 
-                contact.set('photo', this.form.find('#photo').val());
-                console.log(contact);
+                if(this.form.find('#photo').val() !== ''){
+                    contact.set('photo', this.form.find('#photo').val());
+                }
+                
+                contacts.push(contact);
+
+                this.collection.add(contact);
+
+                if (_.indexOf(this.getGroups, contact.group) === -1){
+                    this.$el.find('#filter').find('select').remove().end().append(this.createSelect());
+                }
             }
         });
 
