@@ -1,5 +1,5 @@
 .contact {
-    width: 300px;
+    width: 350px;
     height: 90px;
     background-color: white;
     border: solid;
@@ -60,13 +60,21 @@
     float: left;
 }
 .glyphicon {
-    padding-right: 5px;
+    padding-right: 0px;
 }
 
 .buffer {
-	margin-bottom: 120px;
+	margin-bottom: 140px;
 }
 
 .row {
 	margin-top:30px;
+}
+
+.bigger-glyphicon {
+    font-size:1.1em;
+}
+
+label {
+    color:black;
 }

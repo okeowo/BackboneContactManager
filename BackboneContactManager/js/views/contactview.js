@@ -52,14 +52,14 @@ var ContactView = Backbone.View.extend({
             currentContact.removeClass('addHeight');
             this.$el.find("div:nth-child(4)").toggle();
             currentContact.css('height', '90px');
-            this.$el.css('margin-bottom', '120px');
+            this.$el.css('margin-bottom', '140px');
             //currentContact.animate({ height: '90px', 'margin-bottom':'120px' });
 
         } 
         else {
             //currentContact.animate({ height: '200px', 'margin-bottom': '10px'});
             currentContact.addClass('addHeight');
-            currentContact.css('height', '200px');
+            currentContact.css('height', '220px');
             this.$el.css('margin-bottom', '10px');
             this.$el.find("div:nth-child(4)").toggle();
 
