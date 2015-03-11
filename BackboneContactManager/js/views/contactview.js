@@ -4,6 +4,8 @@ var ContactView = Backbone.View.extend({
 
     events: {
         'click a': 'renderContactInfo',
+        'click .editBtn': 'editContact',
+        'click .deleteBtn': 'deleteContact'
     },
 
     tagName: 'article', 
@@ -31,6 +33,7 @@ var ContactView = Backbone.View.extend({
         return this;
     },
 
+    //must rewrite and save to localStorage for new choose new color
     renderContactHeader: function (group) {
     	switch (group){
     		case 'family':
