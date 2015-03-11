@@ -64,131 +64,141 @@ var directory = new Directory();
 
 
 var DirectoryView = Backbone.View.extend({
-            el: $('#directory'),
+    el: $('#directory'),
 
-        events: {
-            'change #filter select': 'setFilter',
-            'click #saveContactBtn': 'addContact'
-        },
+    events: {
+        'change #filter select': 'setFilter',
+        'click #saveContactBtn': 'addContact'
+    },
 
-            initialize: function() {
-                this.collection = directory;
-                this.render();
-                // create the select to filter by
-                this.$el.find('#filter').append(this.createSelect());
-                this.listenTo(this,'change:filterGroup', this.filterByGroup);
-                this.listenTo(this.collection, 'reset', this.render);
+    initialize: function() {
+        this.collection = directory;
+        this.render();
+        // create the select to filter by
+        this.$el.find('#filter').append(this.createSelect());
+        this.listenTo(this,'change:filterGroup', this.filterByGroup);
+        this.listenTo(this.collection, 'reset', this.render);
 
-                this.form = this.$el.find('#contactForm');
+        this.form = this.$el.find('#contactForm');
 
-                this.listenTo(this.collection, 'add', this.renderContact)
-            },
- 
-            render: function() {
-                this.$el.find('article').remove();
-                _.each(this.collection.models, function(item) {
-                    this.renderContact(item);
-                }, this);
-            },
+        this.listenTo(this.collection, 'add', this.renderContact)
+        this.listenTo(this.collection, 'remove', this.removeContact);
+    },
 
-            renderContact: function(item) {
-                var contactView = new ContactView({
-                    model: item
-                });
-                this.$el.append(contactView.$el);
-            },
+    render: function() {
+        this.$el.find('article').remove();
+        _.each(this.collection.models, function(item) {
+            this.renderContact(item);
+        }, this);
+    },
 
-            getGroups: function() {
-                return _.uniq(this.collection.pluck('group'), false, function(group) {
-                    return group.toLowerCase();
-                });
-            },
-
-            createSelect: function() {
-                var select = $('<select/>', {
-                    class: 'form-control',
-                    id: 'filterSelect',
-                    html: '<option>All</option>'
-                });
-
-                _.each(this.getGroups(), function(item) {
-                    var option = $('<option/>', {
-                        value: item.toLowerCase(),
-                        html: item.toLowerCase(),
-                    }).appendTo(select);
-                });
-
-                return select;
-            },
-
-            //Set filter property and fire change event
-            setFilter: function(e) {
-                this.filterGroup= e.currentTarget.value.toLowerCase();
-                this.trigger('change:filterGroup');
-            },
-
-            //filter the view
-            filterByGroup: function() {
-                this.collection.fetch();
-                if (this.filterGroup === 'all') {
-                    this.collection.reset(this.collection.models);
-                    contactsRouter.navigate('filter/all', { trigger: true });
-                } 
-                else {
-                    this.collection.reset(this.collection.models, { silent: true });
-
-                    var filterGroup = this.filterGroup;
-                    var filtered = _.filter(this.collection.models, function(item) {
-                            return item.get('group') === filterGroup;
-                    });
-
-                    this.collection.reset(filtered);
-
-                    contactsRouter.navigate('filter/' + filterGroup, { trigger: true});
-                }
-            },
-
-            addContact: function () {
-                var contact= new Contact(_.object(_.map(this.form.serializeArray(), _.values))); 
-                var photoPath = this.form.find('#photo').val();
-                if(photoPath !== ''){
-                    var filename = photoPath.replace(/^.*\\/, "");
-                    var prepend = 'assets/img/';
-                    var fixedPath = prepend + filename;
-                    contact.set('photo', fixedPath);
-                }
-                
-                //contacts.push(contact);
-
-                this.collection.add(contact);
-                contact.save();
-
-
-                if (_.indexOf(this.getGroups, contact.group) === -1){
-                    this.$el.find('#filter').find('select').remove().end().append(this.createSelect());
-                }
-                
-                //toastr options and popup
-                toastr.options = {
-                  "closeButton": true,
-                  "debug": false,
-                  "newestOnTop": false,
-                  "progressBar": false,
-                  "positionClass": "toast-top-full-width",
-                  "preventDuplicates": false,
-                  "onclick": null,
-                  "showDuration": "300",
-                  "hideDuration": "1000",
-                  "timeOut": "5000",
-                  "extendedTimeOut": "1000",
-                  "showEasing": "swing",
-                  "hideEasing": "linear",
-                  "showMethod": "fadeIn",
-                  "hideMethod": "fadeOut"
-                }
-
-                toastr["success"]("Contact " + contact.get('name') + " was successfully added to the group " + contact.get('group'));
-            }
+    renderContact: function(item) {
+        var contactView = new ContactView({
+            model: item
         });
+        this.$el.append(contactView.$el);
+    },
+
+    getGroups: function() {
+        return _.uniq(this.collection.pluck('group'), false, function(group) {
+            return group.toLowerCase();
+        });
+    },
+
+    createSelect: function() {
+        var select = $('<select/>', {
+            class: 'form-control',
+            id: 'filterSelect',
+            html: '<option>All</option>'
+        });
+
+        _.each(this.getGroups(), function(item) {
+            var option = $('<option/>', {
+                value: item.toLowerCase(),
+                html: item.toLowerCase(),
+            }).appendTo(select);
+        });
+
+        return select;
+    },
+
+    //Set filter property and fire change event
+    setFilter: function(e) {
+        this.filterGroup= e.currentTarget.value.toLowerCase();
+        this.trigger('change:filterGroup');
+    },
+
+    //filter the view
+    filterByGroup: function() {
+        this.collection.fetch();
+        if (this.filterGroup === 'all') {
+            this.collection.reset(this.collection.models);
+            contactsRouter.navigate('filter/all', { trigger: true });
+        } 
+        else {
+            this.collection.reset(this.collection.models, { silent: true });
+
+            var filterGroup = this.filterGroup;
+            var filtered = _.filter(this.collection.models, function(item) {
+                    return item.get('group') === filterGroup;
+            });
+
+            this.collection.reset(filtered);
+
+            contactsRouter.navigate('filter/' + filterGroup, { trigger: true});
+        }
+    },
+
+    addContact: function () {
+        var contact= new Contact(_.object(_.map(this.form.serializeArray(), _.values))); 
+        var photoPath = this.form.find('#photo').val();
+        if(photoPath !== ''){
+            var filename = photoPath.replace(/^.*\\/, "");
+            var prepend = 'assets/img/';
+            var fixedPath = prepend + filename;
+            contact.set('photo', fixedPath);
+        }
+        
+        //contacts.push(contact);
+
+        this.collection.add(contact);
+        contact.save();
+
+
+        if (_.indexOf(this.getGroups, contact.group) === -1){
+            this.$el.find('#filter').find('select').remove().end().append(this.createSelect());
+        }
+        
+        //toastr options and popup
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-full-width",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        toastr["success"]("Contact " + contact.get('name') + " was successfully added to the group " + contact.get('group'));
+    },
+
+    removeContact: function (removedModel) {
+        var removedGroup = removedModel.get('group');
+        if (_.indexOf(this.getGroups(), removedGroup) === -1){
+            this.$el.find('#filter select').children('[value="' + removedGroup +'"]').remove();
+        }
+    }
+
+});
+
 
         var directoryView = new DirectoryView();
