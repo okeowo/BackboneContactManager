@@ -4,8 +4,8 @@ var ContactView = Backbone.View.extend({
 
     events: {
         'click a': 'renderContactInfo',
-        'click .editBtn': 'editContact',
-        'click .deleteBtn': 'deleteContact'
+        'click button.editBtn': 'editContact',
+        'click button.deleteBtn': 'deleteContact'
     },
 
     tagName: 'article', 
@@ -67,5 +67,32 @@ var ContactView = Backbone.View.extend({
             this.$el.find("div:nth-child(4)").toggle();
 
         }
+    },
+
+    editContact: function () {
+        console.log('edit');
+    },
+
+    deleteContact: function() {
+        var confirmWindow =  confirm ('Please confirm whether to delete contact ' + this.model.get('name'));
+        if (confirmWindow === true) {
+            var removedGroup = this.model.get('group');
+            this.model.destroy();
+            this.remove();
+
+            // must fix removing group if contact was only owner of group
+            // directory is undefined =( 
+            
+            /* 
+            var directory = new Directory();
+
+            if (_.indexOf(directory.getTypes(), removedGroup) === -1){
+                directory.$el.find('#filter select').children('[value="' + removedGroup +'"]').remove();
+            }
+
+            */
+        }
+
     }
+
 });
