@@ -53,7 +53,7 @@ var ContactView = Backbone.View.extend({
     renderContactInfo: function() {
     	this.$el.removeClass('buffer');
     	var currentContact= this.$el.find('a');
-        if (currentContact.hasClass('addHeight')) {
+        if (currentContact.hasClass('addHeight') && !this.preventToggle) {
             currentContact.removeClass('addHeight');
             currentContact.css('height', '90px');
             this.$el.css('margin-bottom', '140px');
@@ -61,7 +61,7 @@ var ContactView = Backbone.View.extend({
             //currentContact.animate({ height: '90px', 'margin-bottom':'120px' });
 
         } 
-        else {
+        else if (!this.preventToggle) {
             //currentContact.animate({ height: '200px', 'margin-bottom': '10px'});
             currentContact.addClass('addHeight');
             currentContact.css('height', '220px');
@@ -72,14 +72,14 @@ var ContactView = Backbone.View.extend({
     },
 
     editContact: function (event) {
-
-
+        this.preventToggle = true;
         this.$el.append(this.editTemplate(this.model.toJSON()));
         $('#editContactModal').modal('show');
     },
 
     cancelEdit: function () {
-        this.$el.find('#editContactModal').remove();        
+        this.$el.find('#editContactModal').remove();  
+        this.preventToggle = false;      
     },
 
 
