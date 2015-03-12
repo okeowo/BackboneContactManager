@@ -147,6 +147,7 @@ var DirectoryView = Backbone.View.extend({
 
             contactsRouter.navigate('filter/' + filterGroup, { trigger: true});
         }
+        } });
     },
 
     addContact: function () {
@@ -193,7 +194,7 @@ var DirectoryView = Backbone.View.extend({
 
     removeContact: function (removedModel) {
         var removedGroup = removedModel.get('group');
-        if (_.indexOf(this.getGroups(), removedGroup) === -1){
+        if (_.indexOf(this.getTypes(), removedGroup) === -1){
             this.$el.find('#filter select').children('[value="' + removedGroup +'"]').remove();
         }
     }
