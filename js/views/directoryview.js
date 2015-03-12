@@ -79,7 +79,7 @@ var DirectoryView = Backbone.View.extend({
         this.listenTo(this,'change:filterGroup', this.filterByGroup);
         this.listenTo(this.collection, 'reset', this.render);
 
-        this.form = this.$el.find('#contactForm');
+        this.addForm = this.$el.find('#addForm');
 
         this.listenTo(this.collection, 'add', this.renderContact)
         this.listenTo(this.collection, 'remove', this.removeContact);
@@ -150,7 +150,7 @@ var DirectoryView = Backbone.View.extend({
     },
 
     addContact: function () {
-        var contact= new Contact(_.object(_.map(this.form.serializeArray(), _.values))); 
+        var contact= new Contact(_.object(_.map(this.addForm.serializeArray(), _.values))); 
         var photoPath = this.form.find('#photo').val();
         if(photoPath !== ''){
             var filename = photoPath.replace(/^.*\\/, "");

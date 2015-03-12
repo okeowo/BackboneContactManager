@@ -1,3 +1,5 @@
+'use strict'
+
 var ContactView = Backbone.View.extend({
     //get the undercore template
     template: _.template($('#contactTemplate').html()),
@@ -7,7 +9,8 @@ var ContactView = Backbone.View.extend({
         'click a': 'renderContactInfo',
         'click button.editBtn': 'editContact',
         'click button.deleteBtn': 'deleteContact',
-        'click button.cancel': 'cancelEdit'
+        'click button.cancel': 'cancelEdit',
+        'click button.save' : 'saveEdit'
     },
 
     tagName: 'article', 
@@ -16,6 +19,11 @@ var ContactView = Backbone.View.extend({
     initialize: function() {
         this.render();
     },
+
+    defaults: function () {
+        this.preventToggle = false;
+    },
+
     render: function() {
     	this.model.set('groupColor', this.renderContactHeader(this.model.get('group')));
         this.$el.html(this.template(this.model.toJSON()));
@@ -74,7 +82,7 @@ var ContactView = Backbone.View.extend({
     editContact: function (event) {
         this.preventToggle = true;
         this.$el.append(this.editTemplate(this.model.toJSON()));
-        $('#editContactModal').modal('show');
+        this.$el.find('#editContactModal').modal('show');
     },
 
     cancelEdit: function () {
@@ -82,6 +90,10 @@ var ContactView = Backbone.View.extend({
         this.preventToggle = false;      
     },
 
+    saveEdit: function () {
+        this.model.save(_.object(_.map(this.$el.find('#editForm').serializeArray(), _.values))); 
+        this.$el.find('#editContactModal').remove(); 
+    },
 
     deleteContact: function() {
         var confirmWindow =  confirm ('Please confirm whether to delete contact ' + this.model.get('name'));
