@@ -147,7 +147,6 @@ var DirectoryView = Backbone.View.extend({
 
             contactsRouter.navigate('filter/' + filterGroup, { trigger: true});
         }
-        } });
     },
 
     addContact: function () {

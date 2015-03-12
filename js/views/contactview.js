@@ -1,6 +1,7 @@
 var ContactView = Backbone.View.extend({
     //get the undercore template
     template: _.template($('#contactTemplate').html()),
+    editTemplate: _.template($("#editContactTemplate").html()),
 
     events: {
         'click a': 'renderContactInfo',
@@ -70,7 +71,8 @@ var ContactView = Backbone.View.extend({
     },
 
     editContact: function () {
-        console.log('edit');
+        $('body').append(this.editTemplate(this.model.toJSON()));
+        $('#editContactModal').modal('show');
     },
 
     deleteContact: function() {
