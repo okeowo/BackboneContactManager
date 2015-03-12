@@ -6,7 +6,8 @@ var ContactView = Backbone.View.extend({
     events: {
         'click a': 'renderContactInfo',
         'click button.editBtn': 'editContact',
-        'click button.deleteBtn': 'deleteContact'
+        'click button.deleteBtn': 'deleteContact',
+        'click button.cancel': 'cancelEdit'
     },
 
     tagName: 'article', 
@@ -54,9 +55,9 @@ var ContactView = Backbone.View.extend({
     	var currentContact= this.$el.find('a');
         if (currentContact.hasClass('addHeight')) {
             currentContact.removeClass('addHeight');
-            this.$el.find("div:nth-child(4)").toggle();
             currentContact.css('height', '90px');
             this.$el.css('margin-bottom', '140px');
+            this.$el.find("div:nth-child(4)").toggle();
             //currentContact.animate({ height: '90px', 'margin-bottom':'120px' });
 
         } 
@@ -70,10 +71,17 @@ var ContactView = Backbone.View.extend({
         }
     },
 
-    editContact: function () {
-        $('body').append(this.editTemplate(this.model.toJSON()));
+    editContact: function (event) {
+
+
+        this.$el.append(this.editTemplate(this.model.toJSON()));
         $('#editContactModal').modal('show');
     },
+
+    cancelEdit: function () {
+        this.$el.find('#editContactModal').remove();        
+    },
+
 
     deleteContact: function() {
         var confirmWindow =  confirm ('Please confirm whether to delete contact ' + this.model.get('name'));

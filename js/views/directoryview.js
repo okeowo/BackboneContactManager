@@ -159,8 +159,6 @@ var DirectoryView = Backbone.View.extend({
             contact.set('photo', fixedPath);
         }
         
-        //contacts.push(contact);
-
         this.collection.add(contact);
         contact.save();
 
