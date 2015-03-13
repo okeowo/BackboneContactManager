@@ -93,6 +93,27 @@ var ContactView = Backbone.View.extend({
     saveEdit: function () {
         this.model.save(_.object(_.map(this.$el.find('#editForm').serializeArray(), _.values))); 
         this.$el.find('#editContactModal').remove(); 
+
+        //toastr options and popup
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        toastr["success"]("Contact " + this.model.get('name') + " was successfully updated");
     },
 
     deleteContact: function() {
