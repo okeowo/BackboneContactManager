@@ -91,7 +91,14 @@ var ContactView = Backbone.View.extend({
     },
 
     saveEdit: function () {
-        this.model.save(_.object(_.map(this.$el.find('#editForm').serializeArray(), _.values))); 
+        var photoPath = this.$el.find('#editForm').find('#photo').val();
+        if ( photoPath !== '' ) {
+            var filename = photoPath.replace(/^.*\\/, "");
+            var prepend = 'assets/img/';
+            var fixedPath = prepend + filename;
+            this.model.set('photo', fixedPath);
+        }
+        this.model.save(_.object(_.map(this.$el.find('#editForm').serializeArray(), _.values)) + { 'photo' : fixedPath}, { patch: true}); 
         this.$el.find('#editContactModal').remove(); 
 
         //toastr options and popup
